@@ -36,3 +36,45 @@
     transform: rotate(360deg);
   }
 }
+.button{
+  width: 100px;
+  border-radius: 5px;
+  padding: 8px 5px;
+}
+.borderr{
+  text-align: center;
+  /* border-right : 2px solid; */
+  padding: 25px;
+}
+.bgclr{
+  background-color: rgb(246, 246, 246);
+}
+/* .category{
+ background-color: transparent;
+}
+.category:hover{
+  box-shadow: 1px 1px 10px;
+  transition: all 800ms;
+  transform: scale(1.1);
+} */
+ .category:hover img{
+  transition: all 800ms;
+  transform: scale(1.1)
+ }
+ .category h4{
+  font-size: 14px;
+ }
+ .category:hover h4{
+  background-color: black;
+  color: White;
+  padding: 7px;
+ }
+ .products:hover img{
+  transition: all 800ms;
+  transform: scale(1.1)
+ }
+ .bannertxt{
+  margin-right: 90px;
+  margin-top: 110px;
+  color: white;
+ }
