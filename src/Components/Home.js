@@ -7,10 +7,8 @@ import Products from './Products';
 function Home() {
     return (
         <div>
-            <Navbarr />
             <Banner />
             <Products />
-            <Footer />
         </div>
     )
 }

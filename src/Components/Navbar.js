@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { FaRegCircleUser } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
+import logo from "../images/logo.svg";
 
 
 function Navbarr() {
@@ -14,7 +15,7 @@ function Navbarr() {
                 <Container>
                     <Link to={'/'}>
                         <Navbar.Brand href="/home" className='fw-bold fs-2'>
-                            <img src='./assets/images/logo.svg'></img>
+                            <img src={logo}></img>
                         </Navbar.Brand>
                     </Link>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -24,8 +25,11 @@ function Navbarr() {
                             <Nav.Link href="#">Pages</Nav.Link>
                             <Nav.Link href="#link">Link</Nav.Link>
                         </Nav>
-                        <Nav.Link href="#link">
-                            <FaRegCircleUser className='fs-3 me-5' />
+                        {/* <Nav.Link href="/signup" className='me-3'>
+                            <FaRegCircleUser className='fs-3 me-2' />Sign up
+                        </Nav.Link> */}
+                        <Nav.Link href="/login">
+                            <FaRegCircleUser className='fs-3 me-2' />Log in
                         </Nav.Link>
                     </Navbar.Collapse>
                 </Container>

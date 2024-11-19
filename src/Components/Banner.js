@@ -6,6 +6,9 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { MdOutlineSavings } from "react-icons/md";
 import { PiClockCountdownFill } from "react-icons/pi";
 import { MdPayment } from "react-icons/md";
+import banner1 from "../images/banner-1.jpg"
+import banner2 from "../images/banner-2.1.avif"
+import banner3 from "../images/banner-2.2.avif"
 
 
 function Banner() {
@@ -15,9 +18,9 @@ function Banner() {
           <Row>
             <Col md={9}>
               <div class="card bg-dark border-0">
-                <img src="./assets/images/banner-15.1.jpg" class="card-img" alt="background" height='600px' />
+                <img src={banner1} class="card-img" alt="background" height='600px' />
                 <div class="card-img-overlay d-flex flex-column justify-content-center text-white">
-                  <h5 class="ms-5 fs-3">Lifestyle Collection</h5>
+                  <h5 class="ms-5 fs-3"  data-aos="fade-up" data-aos-duration="1000">Lifestyle Collection</h5>
                   <h5 class="ms-5 fs-2 fw-bold">Men</h5>
                   <h5 class="ms-5 fs-3">SALE UP TO<span className='fs-5 text-danger ms-2'>30% OFF</span></h5>
                   <p class="ms-5 fs-5">Get Free Shipping On Orders over $99.00</p>
@@ -27,10 +30,10 @@ function Banner() {
             </Col>
             <Col md={3}>
               <div class="card bg-dark border-0">
-                <img src="./assets/images/banner-2.1.avif" class="card-img" alt="background" height='290px' />
+                <img src={banner2} class="card-img" alt="background" height='290px' />
               </div>
               <div class="card bg-dark border-0 mt-3">
-                <img src="./assets/images/banner-3.avif" class="card-img" alt="background" height='290px' />
+                <img src={banner3} class="card-img" alt="background" height='290px' />
               </div>
             </Col>
           </Row>

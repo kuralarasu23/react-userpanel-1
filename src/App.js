@@ -6,18 +6,28 @@ import Shirts from './Components/Shirts';
 import Pants from './Components/Pants';
 import Tshirt from './Components/Tshirt';
 import Shorts from './Components/Shorts';
+import Signup from './Components/Signup';
+import Login from './Components/Login';
+import Apidata from './Components/Apidata';
+import Navbarr from './Components/Navbar';
+import Footer from './Components/Footer';
 
 function App() {
   return (
     <div className='bgclr'>
       <Router>
+        <Navbarr />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/shirts' element={<Shirts />} />
           <Route path='/pants' element={<Pants />} />
           <Route path='/tshirt' element={<Tshirt />} />
           <Route path='/shorts' element={<Shorts />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/apidata/:id' element={<Apidata />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

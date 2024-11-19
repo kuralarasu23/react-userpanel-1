@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { BiLogoPlayStore } from "react-icons/bi";
+import logo from "../images/logo.svg";
 
 function Footer() {
     return (
@@ -10,7 +11,7 @@ function Footer() {
             <Container>
                 <Row className='text-center mt-5 text-white'>
                     <Col xs={{ order: 'first' }}>
-                        <img src='./assets/images/logo.svg'></img>
+                        <img src={logo}></img>
                         <p className='mt-2'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.</p>
                         <a href='' className='d-flex text-decoration-none text-white'>
                                 <p className='border px-3'>Get It On <br></br>
