@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { Card, Button } from 'react-bootstrap'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+// import axios from 'axios';
 import shirtbanner from "../images/shirtbanner.jpg";
 import shirt1 from "../images/denimbg-1.png";
 import shirt2 from "../images/casualbg-1.png";
@@ -22,7 +23,6 @@ import shorts1 from "../images/shorts-2.png";
 import shorts2 from "../images/shorts-3.jpg";
 import shorts3 from "../images/shorts-4.jpg";
 import shorts4 from "../images/shorts-5.jpg";
-
 const api = [
     {
         'name': 'shirt',
@@ -138,12 +138,13 @@ const api = [
     }
 ];
 
-function Apidata() {
 
+function Apidata() {
     const [banner, setBanner] = useState("")
     const [products, setProducts] = useState([])
     const [name, setName] = useState("")
     const { id } = useParams()
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -155,6 +156,10 @@ function Apidata() {
 
 
     }, [])
+    const HandleClick = (id) => {
+        console.log(id);
+        navigate(`/productdetails/${id}`)
+    }
 
     return (
         <div>
@@ -167,8 +172,8 @@ function Apidata() {
                     </div>
                 </div>
                 <Row>
-                    {products.map((a) => (
-                        <Col md={3}>
+                    {products.map((a, index) => (
+                        <Col md={3} onClick={() => HandleClick(index)}>
                             <Card className='products' style={{ width: '100%', border: 'none' }}>
                                 <Card.Img variant="top" src={a.image} style={{ width: '100%', height: '250px' }} className='p-2' />
                                 <Card.Body className='text-center'>

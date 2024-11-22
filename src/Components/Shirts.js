@@ -17,7 +17,6 @@ function Shirts() {
   return (
     <div>
       <Navbarr />
-      <Container>
         <div class="card bg-dark border-0">
           <img src="./assets/images/banner-02.jpg" class="card-img" alt="background" height='600px' />
           <div class="card-img-overlay d-flex flex-column justify-content-center text-white">
@@ -25,6 +24,7 @@ function Shirts() {
             <h5 class="ms-5 fs-1 fw-bold text-danger">Shirts For Men</h5>
           </div>
         </div>
+      <Container>
         <div className='py-4 bg-white mt-5'>
           <Row>
             <Col xs={3} >

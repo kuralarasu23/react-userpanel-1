@@ -11,6 +11,8 @@ import Login from './Components/Login';
 import Apidata from './Components/Apidata';
 import Navbarr from './Components/Navbar';
 import Footer from './Components/Footer';
+import Productdetails from './Components/Productdetails';
+import Task from './Components/Task';
 
 function App() {
   return (
@@ -26,8 +28,10 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
           <Route path='/apidata/:id' element={<Apidata />} />
+          <Route path='/productdetails/:id' element={<Productdetails />} />
         </Routes>
         <Footer />
+        {/* <Task /> */}
       </Router>
     </div>
   );

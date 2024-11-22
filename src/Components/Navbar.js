@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { FaRegCircleUser } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import logo from "../images/logo.svg";
-
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Navbarr() {
     return (
@@ -20,11 +20,19 @@ function Navbarr() {
                     </Link>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mx-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="#">Pages</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
-                        </Nav>
+                        <NavDropdown
+                            id="nav-dropdown-dark-example"
+                            title="Pages"
+                            menuVariant="dark"
+                            className='mx-auto'
+                        >
+                            <NavDropdown.Item href="/apidata/1">Shirts</NavDropdown.Item>
+                            <NavDropdown.Item href="/apidata/2">
+                                Pants
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="/apidata/3">T-Shirts</NavDropdown.Item>
+                            <NavDropdown.Item href="/apidata/4">Shorts</NavDropdown.Item>
+                        </NavDropdown>
                         {/* <Nav.Link href="/signup" className='me-3'>
                             <FaRegCircleUser className='fs-3 me-2' />Sign up
                         </Nav.Link> */}
