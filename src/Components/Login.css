@@ -1,0 +1,239 @@
+/* Background Gradient */
+.login-bg {
+    background: linear-gradient(120deg, #89f7fe, #66a6ff);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Text Gradient Effect */
+  .text-gradient {
+    background: -webkit-linear-gradient(45deg, #FF66B2, #3366FF);
+    /* -webkit-background-clip: text; */
+    color: transparent;
+  }
+  
+  /* Login Form Styling */
+  .login-form {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* Form Inputs */
+  .form-control-lg {
+    border-radius: 25px;
+    padding: 15px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  /* Button Styling */
+  /* .btn {
+    font-size: 1rem;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+  } */
+  
+  .btn-outline-primary, .btn-outline-warning {
+    border-width: 2px;
+  }
+  
+  .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .btn-outline-primary:hover, .btn-outline-warning:hover, .btn-success:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Hover effects on buttons */
+  button:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .login-form {
+      padding: 25px 20px;
+    }
+  
+    .btn {
+      padding: 8px 20px;
+    }
+  }
+  
+  
+  /* Signup page background */
+.signup-page {
+    background-color: #f0f4f8; /* Light blue background */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Main container styling */
+  .signup-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  /* Heading style */
+  .signup-heading {
+    color: #0066cc;
+    font-family: "Arial", sans-serif;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+  }
+  
+  /* Form group styling */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Input fields */
+  .form-control {
+    padding: 10px;
+    border: 2px solid #0066cc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #ff7e5f; /* Color change on focus */
+    outline: none;
+  }
+  
+  /* Buttons */
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .btn-signup {
+    background: linear-gradient(45deg, #ff7e5f, #feb47b);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-signup:hover {
+    background: linear-gradient(45deg, #feb47b, #ff7e5f);
+  }
+  
+  .btn-delete {
+    background-color: #ff3d00;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+  
+  .btn-delete:hover {
+    background-color: #ff5722;
+  }
+
+  .forgot-password-page {
+    background: #f8f9fa;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .forgot-password-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .forgot-password-heading {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  .forgot-password-form {
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    border-radius: 50px;
+    padding: 15px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .btn-reset {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 50px;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-reset:hover {
+    background-color: #218838;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .text-decoration-none {
+    text-decoration: none;
+    color: #28a745;
+  }
+  
+  .text-decoration-none:hover {
+    text-decoration: underline;
+  }
+  
+  
+  

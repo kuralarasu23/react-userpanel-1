@@ -18,7 +18,7 @@ function Navbarr() {
                             <img src={logo}></img>
                         </Navbar.Brand>
                     </Link>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <NavDropdown
                             id="nav-dropdown-dark-example"
@@ -26,12 +26,12 @@ function Navbarr() {
                             menuVariant="dark"
                             className='mx-auto'
                         >
-                            <NavDropdown.Item href="/apidata/1">Shirts</NavDropdown.Item>
-                            <NavDropdown.Item href="/apidata/2">
+                            <NavDropdown.Item href="/shirts">Shirts</NavDropdown.Item>
+                            <NavDropdown.Item href="/pants">
                                 Pants
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="/apidata/3">T-Shirts</NavDropdown.Item>
-                            <NavDropdown.Item href="/apidata/4">Shorts</NavDropdown.Item>
+                            <NavDropdown.Item href="/tshirt">T-Shirts</NavDropdown.Item>
+                            <NavDropdown.Item href="/shorts">Shorts</NavDropdown.Item>
                         </NavDropdown>
                         {/* <Nav.Link href="/signup" className='me-3'>
                             <FaRegCircleUser className='fs-3 me-2' />Sign up

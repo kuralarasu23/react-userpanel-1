@@ -1,80 +1,68 @@
-import React, { useEffect, useState } from 'react'
-import shirtbanner from "../images/shirtbanner.jpg";
-import shirt1 from "../images/denimbg-1.png";
-import shirt2 from "../images/casualbg-1.png";
-import shirt3 from "../images/checked-1.png";
-import shirt4 from "../images/printed.png";
-import pantsbanner from "../images/pantbanner.jpg";
-import pant1 from "../images/pant-1.webp";
-import pant2 from "../images/pant-2.jpg";
-import pant3 from "../images/pant-3.jpg";
-import pant4 from "../images/pant-4.jpg";
-import tshirtbanner from "../images/tshirtbanner.jpg";
-import tshirt1 from "../images/tshirt-2.jpg";
-import tshirt2 from "../images/tshirtbg-1.png";
-import tshirt3 from "../images/tshirt-3.png";
-import tshirt4 from "../images/tshirt-4.jpg";
-import shortsbanner from "../images/shortsbanner.jpg";
-import shorts1 from "../images/shorts-2.png";
-import shorts2 from "../images/shorts-3.jpg";
-import shorts3 from "../images/shorts-4.jpg";
-import shorts4 from "../images/shorts-5.jpg";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { useParams } from 'react-router-dom';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
-const api = [
-    {
-        id: '0',
-        image: shirt1,
-        name: 'Denim Shirt',
-        price: '$499',
-    },
-
-    {
-        id: '1',
-        image: shirt2,
-        name: 'Casual Shirt',
-        price: '$499',
-    },
-    {
-        id: '2 ',
-        image: shirt3,
-        name: 'checked Shirt',
-        price: '$499',
-    }
-]
-
-function Productdetails() {
+function Productsdetails() {
+    const giturl = 'https://raw.githubusercontent.com/kuralarasu23/react-userpanel-1/refs/heads/main/src/images/';
     const [data, setData] = useState([]);
-    const { id } = useParams()
+    const [filteredData, setFilteredData] = useState([]);
+    const { id } = useParams();
 
     useEffect(() => {
-        let filterdata = api.filter(items => items.id == id)
+        GetData();
+    }, []);
 
-        setData(filterdata)
-        console.log(filterdata);
+    const GetData = () => {
+        axios.get("https://673c4f2196b8dcd5f3f961c0.mockapi.io/Products/Products")
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
+    };
 
-    }, [])
+    useEffect(() => {
+        if (data) {
+            const filtered = data.filter(item => item.id === id);
+            setFilteredData(filtered);
+        }
+    }, [data, id]);
 
     return (
-        <div className='fs-1 fw-bold text-center'>
-            <Container>
-                <Row>
-                    {data.map((items) => (
-                        <>
-                            <Col md={6}>
-                                <img src={items.image} />
-                            </Col>
-                            <Col md={6}>
-                                <h3>{items.name}</h3>
-                                <h5>{items.price}</h5>
-                            </Col>
-                        </>
-                    ))}
-                </Row>
-            </Container>
-        </div>
-    )
+        <Container className="py-5">
+            <Row className="gy-4">
+                {filteredData.map((item) => (
+                    <React.Fragment key={item.id}>
+                        <Col md={6} className="text-center">
+                            <img
+                                src={giturl + item.image}
+                                alt={item.name}
+                                style={{ height: '300px', objectFit: 'cover', borderRadius: '10px' }}
+                                className="img-fluid"
+                            />
+                        </Col>
+                        <Col md={6}>
+                            <h2 className="mb-3">{item.name}</h2>
+                            <h4 className="text-muted mb-4">{item.price}</h4>
+                            <p>
+                                <strong>Description:</strong> <br />
+                                Crafted with premium-quality materials, this piece offers a perfect blend of style and comfort, ensuring you look sharp while staying relaxed all day. Designed with modern tailoring, it features a sleek fit that complements any body type, making it an essential addition to your wardrobe. Whether you're heading to a casual outing or a formal event, this versatile item pairs effortlessly with your favorite trousers, jeans, or blazers. Its durable fabric and fine stitching promise long-lasting wear, while the timeless design keeps you on-trend for every occasion.
+                            </p>
+                            <div className="mt-4">
+                                <Button variant="primary" className="me-2">Add to Cart</Button>
+                                <Button variant="success">Buy Now</Button>
+                            </div>
+                        </Col>
+                    </React.Fragment>
+                ))}
+            </Row>
+        </Container>
+    );
 }
 
-export default Productdetails
+export default Productsdetails;

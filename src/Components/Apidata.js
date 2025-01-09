@@ -1,184 +1,116 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
-import { Card, Button } from 'react-bootstrap'
-import { useNavigate, useParams } from 'react-router-dom';
-// import axios from 'axios';
-import shirtbanner from "../images/shirtbanner.jpg";
-import shirt1 from "../images/denimbg-1.png";
-import shirt2 from "../images/casualbg-1.png";
-import shirt3 from "../images/checked-1.png";
-import shirt4 from "../images/printed.png";
-import pantsbanner from "../images/pantbanner.jpg";
-import pant1 from "../images/pant-1.webp";
-import pant2 from "../images/pant-2.jpg";
-import pant3 from "../images/pant-3.jpg";
-import pant4 from "../images/pant-4.jpg";
-import tshirtbanner from "../images/tshirtbanner.jpg";
-import tshirt1 from "../images/tshirt-2.jpg";
-import tshirt2 from "../images/tshirtbg-1.png";
-import tshirt3 from "../images/tshirt-3.png";
-import tshirt4 from "../images/tshirt-4.jpg";
-import shortsbanner from "../images/shortsbanner.jpg";
-import shorts1 from "../images/shorts-2.png";
-import shorts2 from "../images/shorts-3.jpg";
-import shorts3 from "../images/shorts-4.jpg";
-import shorts4 from "../images/shorts-5.jpg";
-const api = [
-    {
-        'name': 'shirt',
-        'banner': shirtbanner,
-        'id': '1',
-        'products': [
-            {
-                'image': shirt1,
-                'name': 'Denim Shirt',
-                'price': '$499'
-            },
-            {
-                'image': shirt2,
-                'name': 'Casual Shirt',
-                'price': '$499'
-            },
-            {
-                'image': shirt3,
-                'name': 'checked Shirt',
-                'price': '$499'
-            },
-            {
-                'image': shirt4,
-                'name': 'Printed Shirt',
-                'price': '$499'
-            },
-        ]
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
+import shirt from '../images/shirtbg-1.png'
+import pant from '../images/pantsc-1.png'
+import tshirt from '../images/tshirt-3.png'
+import shorts from '../images/shorts-2.png'
+import ads1 from "../images/ad-1.jpg";
+import ads2 from "../images/ad-2.avif";
+import ads3 from "../images/ad-3.jpg";
+import axios from 'axios';
 
-    },
-    {
-        'name': 'pants',
-        'banner': pantsbanner,
-        'id': '2',
-        'products': [
-            {
-                'image': pant1,
-                'name': 'Formalpant',
-                'price': '$499'
-            },
-            {
-                'image': pant2,
-                'name': 'Cargo-panmt',
-                'price': '$499'
-            },
-            {
-                'image': pant3,
-                'name': 'Track-pant',
-                'price': '$499'
-            },
-            {
-                'image': pant4,
-                'name': 'Jean',
-                'price': '$499'
-            },
-        ]
-
-    },
-    {
-        'name': 'T-shirts',
-        'banner': tshirtbanner,
-        'id': '3',
-        'products': [
-            {
-                'image': tshirt1,
-                'name': 'Oversized Tshirt',
-                'price': '$499'
-            },
-            {
-                'image': tshirt2,
-                'name': 'T-shirt',
-                'price': '$499'
-            },
-            {
-                'image': tshirt3,
-                'name': 'Full-sleeve',
-                'price': '$499'
-            },
-            {
-                'image': tshirt4,
-                'name': 'Polo-TShirt',
-                'price': '$499'
-            },
-        ]
-
-    },
-    {
-        'name': 'Shorts',
-        'banner': shortsbanner,
-        'id': '4',
-        'products': [
-            {
-                'image': shorts1,
-                'name': 'Chino-Shorts',
-                'price': '$499'
-            },
-            {
-                'image': shorts2,
-                'name': 'Cotton Stretch Shorts',
-                'price': '$499'
-            },
-            {
-                'image': shorts3,
-                'name': 'Gym-Shorts',
-                'price': '$499'
-            },
-            {
-                'image': shorts4,
-                'name': 'Denim-shorts',
-                'price': '$499'
-            },
-        ]
-
-    }
-];
+const apidataUrl = "https://673c4f2196b8dcd5f3f961c0.mockapi.io/Products/Products";
+const giturl = 'https://raw.githubusercontent.com/kuralarasu23/react-userpanel-1/refs/heads/main/src/images/'
 
 
 function Apidata() {
-    const [banner, setBanner] = useState("")
-    const [products, setProducts] = useState([])
-    const [name, setName] = useState("")
-    const { id } = useParams()
-    const navigate = useNavigate()
-
+    const [listingType, setListingType] = useState("");
+    const [allProducts, setAllProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const shirt = api.filter(items => items.id === id)
-        console.log(shirt);
+        const fetchData = async () => {
+            try {
+                const response = await fetch(apidataUrl);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log('Fetched Data:', data);
 
-        setBanner(shirt[0].banner)
-        setProducts(shirt[0].products)
+                setAllProducts(data);  
+                setFilteredProducts(data);
+            } catch (error) {
+                setError(`Error: ${error.message}`);
+            } finally {
+                setLoading(false); 
+            }
+        };
 
+        fetchData();
+    }, []);
+    
+    const handleClick = (productId) => {
+        console.log('Navigating to product details:', productId);
+        navigate(`/productdetails/${productId}`);
+    };
 
-    }, [])
-    const HandleClick = (id) => {
-        console.log(id);
-        navigate(`/productdetails/${id}`)
-    }
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div>
-            <Container>
-                <div class="card bg-dark border-0 mb-5">
-                    <img src={banner} class="card-img" alt="background" height='600px' />
-                    <div class="card-img-overlay d-flex flex-column justify-content-center text-white">
-                        <h5 class="ms-5 fs-4 display-3">Lifestyle Collection</h5>
-                        <h5 class="ms-5 fs-1 fw-bold text-danger">Trends For Men</h5>
-                    </div>
-                </div>
-                <Row>
-                    {products.map((a, index) => (
-                        <Col md={3} onClick={() => HandleClick(index)}>
+            {/* <h1>Listing Type: {listingType || 'All Products'}</h1> */}
+            {/* <Container>
+                <Row className='text-center'>
+                    <Col md={2} className='p-3'>
+                    </Col>
+                    <Col md={2} className='p-3 category'>
+                        <Link onClick={() => handleCategoryClick("shirts")} to={'/apidata/1'} className='text-decoration-none' >
+                            <a href='' className='text-decoration-none text-dark d-block bg-white p-3'>
+                                <img src={shirt} style={{ width: '100%', height: '170px' }} className='cateory' />
+                                <h4 className='mt-3'>Shirts</h4>
+                            </a>
+                        </Link>
+                    </Col>
+                    <Col md={2} className='p-3 category'>
+                        <Link onClick={() => handleCategoryClick("pants")} to={'/apidata/2'} className='text-decoration-none'>
+                            <a href='' className='text-decoration-none text-dark  d-block bg-white p-3'>
+                                <img src={pant} style={{ width: '100%', height: '170px' }} className='cateory' />
+                                <h4 className='mt-3'>Pants</h4>
+                            </a>
+                        </Link>
+                    </Col>
+                    <Col md={2} className='p-3 category'>
+                        <Link onClick={() => handleCategoryClick("tshirts")} to={'/apidata/3'} className='text-decoration-none'>
+                            <a href='' className='text-decoration-none text-dark d-block bg-white p-3'>
+                                <img src={tshirt} style={{ width: '100%', height: '170px' }} className='cateory' />
+                                <h4 className='mt-3'>T-Shirts</h4>
+                            </a>
+                        </Link>
+                    </Col>
+                    <Col md={2} className='p-3 category'>
+                        <Link onClick={() => handleCategoryClick("shorts")} to={'/apidata/4'} className='text-decoration-none'>
+                            <a href='' className='text-decoration-none text-dark  d-block bg-white p-3'>
+                                <img src={shorts} style={{ width: '100%', height: '170px' }} className='categry' />
+                                <h4 className='mt-3'>Shorts</h4>
+                            </a>
+                        </Link>
+                    </Col>
+                    <Col md={2} className='p-3'>
+                    </Col>
+                </Row>
+            </Container> */}
+            <Row className='mt-5'>
+                <hr></hr>
+                {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
+                        <Col md={3}>
                             <Card className='products' style={{ width: '100%', border: 'none' }}>
-                                <Card.Img variant="top" src={a.image} style={{ width: '100%', height: '250px' }} className='p-2' />
+                                <Card.Img variant="top" src={giturl + product.image} style={{ width: '100%', height: '250px' }} className='p-2' />
                                 <Card.Body className='text-center'>
-                                    <Card.Title>{a.name}</Card.Title>
-                                    <Card.Text>{a.price}
+                                    <Card.Title>{product.name}</Card.Title>
+                                    <Card.Text>{product.price}
                                     </Card.Text>
                                     <a>
                                         <Button className='bg-success px-5'>Buy Now</Button>
@@ -186,12 +118,14 @@ function Apidata() {
                                 </Card.Body>
                             </Card>
                         </Col>
-                    ))}
-                </Row>
-            </Container>
+                    ))
 
+                ) : (
+                    <p>no products</p>
+                )}
+            </Row>
         </div>
-    )
+    );
 }
 
-export default Apidata
+export default Apidata;

@@ -12,7 +12,10 @@ import Apidata from './Components/Apidata';
 import Navbarr from './Components/Navbar';
 import Footer from './Components/Footer';
 import Productdetails from './Components/Productdetails';
-import Task from './Components/Task';
+// import Task from './Components/Task';
+import CategoryPage from './Components/CategoryPage';
+import Productsdetails from './Components/Productdetails';
+import ForgotPassword from './Components/ForgotPassword';
 
 function App() {
   return (
@@ -27,8 +30,9 @@ function App() {
           <Route path='/shorts' element={<Shorts />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/apidata/:id' element={<Apidata />} />
-          <Route path='/productdetails/:id' element={<Productdetails />} />
+          <Route path='/forgot' element={<ForgotPassword />} />
+          {/* <Route path='/apidata/:id' element={<Apidata />} /> */}
+          <Route path="/productsdetails/:id" element={<Productsdetails />} />
         </Routes>
         <Footer />
         {/* <Task /> */}

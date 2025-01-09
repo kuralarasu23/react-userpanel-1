@@ -1,107 +1,65 @@
-import React from 'react'
-import Navbarr from './Navbar'
-import { Navbar } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
 import { Row, Container, Col } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Footer from './Footer';
-import { TbTruckDelivery } from "react-icons/tb";
-import { MdOutlineSavings } from "react-icons/md";
-import { PiClockCountdownFill } from "react-icons/pi";
-import { MdPayment } from "react-icons/md";
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+const banner = 'https://raw.githubusercontent.com/kuralarasu23/react-userpanel-1/refs/heads/main/src/images/pantbanner.jpg'
 
 
+function Shirts() {
+  const giturl = 'https://raw.githubusercontent.com/kuralarasu23/react-userpanel-1/refs/heads/main/src/images/'
+  const [data, setData] = useState([]);
+  const { id } = useParams()
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    GetData();
+  }, []);
+  const Handleclick = (id) => {
+    console.log(id);
+    navigate(`/productsdetails/${id}`)
+  }
 
-function Pants() {
-    return (
-        <div>
-            <Navbarr />
-            <div class="card bg-dark border-0">
-                    <img src="./assets/images/banner-04.jpg" class="card-img" alt="background" height='600px' />
-                    <div class="card-img-overlay d-flex flex-column justify-content-center text-white">
-                    </div>
-                </div>
-            <Container>
-                <div className='py-4 bg-white mt-5'>
-                    <Row>
-                        <Col xs={3} >
-                            <div className='my-auto border-end text-center'>
-                                <TbTruckDelivery className='fs-1' />
-                                <b>Fast Delivery</b>
-                            </div>
-                        </Col>
-                        <Col xs={3}>
-                            <div className='my-auto border-end  text-center'>
-                                <MdOutlineSavings className='fs-1' />
-                                <b>Money Guarantee</b><br></br>
-                            </div>
-                        </Col>
-                        <Col xs={3}>
-                            <div className='my-auto border-end text-center'>
-                                <PiClockCountdownFill className='fs-1' />
-                                <b>365 Days</b><br></br>
-                            </div>
-                        </Col>
-                        <Col xs={3}>
-                            <div className='my-auto text-center'>
-                                <MdPayment className='fs-1' />
-                                <b>Payment</b><br></br>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                <Row className='mt-5'>
-                    <h1 className='text-center mb-5 display-4 mt-2' >Men's Pants</h1>
-                    <Col xs={3}><Card className='products' style={{ width: '16rem', border: 'none' }}>
-                        <Card.Img variant="top" src="./assets/images/pant-1.webp" style={{ width: '100%', height: '250px' }} className='p-2' />
-                        <Card.Body className='text-center'>
-                            <Card.Title>Formal Pant</Card.Title>
-                            <Card.Text>₹499
-                            </Card.Text>
-                            <a>
-                                <Button className='bg-success px-5'>Buy Now</Button>
-                            </a>
-                        </Card.Body>
-                    </Card></Col>
-                    <Col xs={3}><Card className='products' style={{ width: '16rem', border: 'none' }}>
-                        <Card.Img variant="top" src="./assets/images/pant-2.jpg" style={{ width: '100%', height: '250px' }} className='p-2' />
-                        <Card.Body className='text-center'>
-                            <Card.Title>Cargo-Pant</Card.Title>
-                            <Card.Text>₹499
-                            </Card.Text>
-                            <a>
-                                <Button className='bg-success px-5'>Buy Now</Button>
-                            </a>
-                        </Card.Body>
-                    </Card></Col>
-                    <Col xs={3}><Card className='products' style={{ width: '16rem', border: 'none' }}>
-                        <Card.Img variant="top" src="./assets/images/pant-3.jpg" style={{ width: '100%', height: '250px' }} className='p-2' />
-                        <Card.Body className='text-center'>
-                            <Card.Title>Track-Pant</Card.Title>
-                            <Card.Text>₹499
-                            </Card.Text>
-                            <a>
-                                <Button className='bg-success px-5'>Buy Now</Button>
-                            </a>
-                        </Card.Body>
-                    </Card></Col>
-                    <Col xs={3}><Card className='products' style={{ width: '16rem', border: 'none' }}>
-                        <Card.Img variant="top" src="./assets/images/pant-4.jpg" style={{ width: '100%', height: '250px' }} className='p-2' />
-                        <Card.Body className='text-center'>
-                            <Card.Title>Jean</Card.Title>
-                            <Card.Text>₹499
-                            </Card.Text>
-                            <a>
-                                <Button className='bg-success px-5'>Buy Now</Button>
-                            </a>
-                        </Card.Body>
-                    </Card></Col>
-                </Row>
-            </Container>
-            <Footer />
+  const GetData = () => {
+    axios.get("https://673c4f2196b8dcd5f3f961c0.mockapi.io/Products/Products")
+      .then(response => setData(response.data))
+      .catch(error => {
+        console.error("Error fetching data:", error);
+
+      });
+  };
+
+  const filterdata = data.filter(items => items.listingType == "pants")
+  console.log(filterdata);
+
+  return (
+    <div>
+      <Container>
+      <div class="card bg-dark border-0">
+        <img src={banner} class="card-img" alt="background" height='600px' />
+        <div class="card-img-overlay d-flex flex-column justify-content-center text-white">
+          <h5 class="ms-5 fs-4 display-3 text-end me-5">Lifestyle Collection</h5>
+          <h5 class="ms-5 fs-1 fw-bold text-danger text-end me-5">Pants For Men</h5>
         </div>
-    )
+      </div>
+        <Row className='py-5'>
+          {filterdata.map((a) => (
+            <Col md={3} onClick={() => Handleclick(a.id)}>
+              <Card style={{ width: '100%', height: '100%', marginTop: '20px', marginBottom: '20px' }} className='img'>
+                <Card.Img variant="top" src={giturl + a.image} style={{ height: '300px' }} />
+                <Card.Body>
+                  <Card.Title className="fs-6">{a.name}</Card.Title>
+                  <Card.Text>{a.price}</Card.Text>
+                  <Button variant="primary">Buy Now</Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
+  )
 }
 
-export default Pants
+export default Shirts

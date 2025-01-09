@@ -1,93 +1,115 @@
-import React from 'react'
-import "bootstrap/dist/css/bootstrap.min.css";
-import { ImGithub } from "react-icons/im";
-// import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
-// import Link from "next/link";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./Login.css";
 
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
 
 function Login() {
-    const [apiData, setApiData] = useState([]);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    // const router = useRouter();
-    useEffect(() => {
-      axios
-        .get("https://66f0f85341537919154f06e7.mockapi.io/signup")
-        .then((response) => {
-          setApiData(response.data);
-        });
-    }, []);
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log("email: ", email);
-      console.log("password: ", password);
-  
-      if (email) {
-        if (password) {
-          let EmailData = apiData.filter((items) => items.email == email);
-          console.log("db true");
-          if (EmailData.length == 0) {
-            alert("can't see your email, pls register first");
-            // router.push("Signup");
-          } else {
-            if (password == EmailData[0]?.password) {
-              alert("login successfully");
-            //   router.push("Products");
-            } else {
-              alert("please enter correct password");
-            }
-          }
-        } else {
-          alert("please fill the password");
-        }
+  const [apiData, setApiData] = useState([]);
+  const navigate =useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("https://66f0f85341537919154f06e7.mockapi.io/signup")
+      .then((response) => setApiData(response.data))
+      .catch((error) => toast.error("Failed to fetch user data."));
+  }, []);
+
+  const handleLogin = (values) => {
+    const user = apiData.find((item) => item.email === values.email);
+
+    if (user) {
+      if (user.password === values.password) {
+        toast.success("Login successful!", { position: "top-center" });
+        navigate('/')
       } else {
-        alert("please fill the email");
+        toast.error("Incorrect password", { position: "top-center" });
       }
-    };
+    } else {
+      toast.error("Email not found. Please register first.", { position: "top-center" });
+    }
+  };
+
+ 
+
   return (
-    <div className='bgclrr'>
-        <div className="d-flex flex-column justify-content-center align-items-center vh-100  text-white">
-      <h1 className="text-success py-4 display-3">Log in</h1>
-      <form className="w-25" onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            placeholder="Enter Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter Password"
-          />
-        </div>
-        <div className="d-flex justify-content-between mt-4">
-          <Link to={"/signup"}>
-          <button type="submit" className="btn btn-primary fw-bold">
-            Sign up
-          </button> 
-          </Link>
-          <button type="submit" className="btn btn-success fw-bold">
-            Submit
-          </button>
-          <Link href={"Updatepassword"} className="btn btn-primary fw-bold">
-            Forget Password
-          </Link>
-        </div>
-      </form>
+    <div className="login-bg">
+      <div className="container d-flex flex-column justify-content-center align-items-center vh-100">
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          validationSchema={LoginSchema}
+          onSubmit={handleLogin}
+        >
+          {() => (
+            <Form className="login-form shadow-lg p-4 rounded-lg">
+              <h1 className="text-center fw-bold mb-4">Login</h1>
+
+              <div className="mb-4">
+                <Field
+                  type="email"
+                  name="email"
+                  className="form-control form-control-lg rounded-pill"
+                  placeholder="Enter Email"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+
+              <div className="mb-4">
+                <Field
+                  type="password"
+                  name="password"
+                  className="form-control form-control-lg rounded-pill"
+                  placeholder="Enter Password"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+
+              <div className="d-flex justify-content-between mt-4">
+                <Link to="/signup">
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary rounded-pill fw-bold"
+                  >
+                    Sign Up
+                  </button>
+                </Link>
+                <button type="submit" className="btn btn-success rounded-pill fw-bold">
+                  Login
+                </button>
+                <Link to="/forgot">
+                  <button
+                    type="button"
+                    className="btn btn-outline-warning rounded-pill fw-bold"
+                  >
+                    Forgot Password
+                  </button>
+                </Link>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+
+      <ToastContainer />
     </div>
-    </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

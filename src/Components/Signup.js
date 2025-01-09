@@ -1,121 +1,131 @@
-import React from 'react'
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "axios";
+import * as Yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
 
-
+const SignupSchema = Yup.object().shape({
+  name: Yup.string().required("Full Name is required"),
+  num: Yup.string()
+    .required("Mobile Number is required")
+    .matches(/^[0-9]{10}$/, "Mobile Number must be 10 digits"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+  repassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
+});
 
 function Signup() {
+  const navigate = useNavigate();
 
-    const [num, setNum] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
-  const [id, setId] = useState("2");
-//   const router = useRouter();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("hi");
-    if (password == repassword) {
-      if (email == "" && password == "")
-        return alert("invaild eamil or password");
-      axios.post("https://66f0f85341537919154f06e7.mockapi.io/signup", {
-        num,
-        email,
-        password,
+  const handleSubmit = (values, { resetForm }) => {
+    axios
+      .post("https://66f0f85341537919154f06e7.mockapi.io/signup", values)
+      .then(() => {
+        toast.success("Signup Successful");
+        resetForm();
+        navigate('/login')
+      })
+      .catch((error) => {
+        toast.error("Error during signup. Please try again.");
       });
-      setNum("");
-      setEmail("");
-      setPassword("");
-      setRepassword("");
-    //   router.push("/Signin");  
-    } else {
-      alert("Miss Match Password");
-    }
-  };
-  const DeleteData = (id) => {
-    axios.delete(`https://66f0f85341537919154f06e7.mockapi.io/signup/1`);
   };
 
 
   return (
-    <div>
-        <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-primary bgclrr">
-      <h1 className="display-3 text-danger">Sign Up</h1>
-      <form className="w-25" onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Number
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            id="name"
-            placeholder="Enter Number"
-            value={num}
-            onChange={(e) => setNum(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            placeholder="Enter Eamil"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Conform Password
-          </label>
-          <input
-            type="password"
-            placeholder="Re-Enter  Password"
-            className="form-control"
-            id="repassword"
-            value={repassword}
-            onChange={(e) => setRepassword(e.target.value)}
-          />
-        </div>
-        <div className="d-flex justify-content-between my-4">
-          <button type="submit" className="btn btn-warning  fw-bold px-4">
-            Sign up
-          </button>
-          <button
-          onClick={DeleteData}
-          type="submit"
-          className="btn btn-danger  fw-bold px-4"
+    <div className="signup-page">
+      <div className="signup-container">
+        <h1 className="signup-heading">Sign Up</h1>
+        <Formik
+          initialValues={{
+            name: "",
+            num: "",
+            email: "",
+            password: "",
+            repassword: "",
+          }}
+          validationSchema={SignupSchema}
+          onSubmit={handleSubmit}
         >
-          Delete
-        </button>
-        </div>
-       
-      </form>
+          {() => (
+            <Form className="signup-form">
+              <div className="form-group">
+                <label htmlFor="name" className="form-label">Full Name</label>
+                <Field
+                  type="text"
+                  name="name"
+                  className="form-control"
+                  placeholder="Enter Full Name"
+                />
+                <ErrorMessage name="name" component="div" className="text-danger" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="num" className="form-label">Mobile Number</label>
+                <Field
+                  type="text"
+                  name="num"
+                  className="form-control"
+                  placeholder="Enter Mobile Number"
+                />
+                <ErrorMessage name="num" component="div" className="text-danger" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email" className="form-label">Email Address</label>
+                <Field
+                  type="email"
+                  name="email"
+                  className="form-control"
+                  placeholder="Enter Email"
+                />
+                <ErrorMessage name="email" component="div" className="text-danger" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password" className="form-label">Password</label>
+                <Field
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  placeholder="Enter Password"
+                />
+                <ErrorMessage name="password" component="div" className="text-danger" />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="repassword" className="form-label">Confirm Password</label>
+                <Field
+                  type="password"
+                  name="repassword"
+                  className="form-control"
+                  placeholder="Re-enter Password"
+                />
+                <ErrorMessage name="repassword" component="div" className="text-danger" />
+              </div>
+
+              <div className="form-buttons">
+                <button type="submit" className="btn btn-signup">Sign Up</button>
+              </div>
+
+              <div className="text-center mt-3">
+                <p>Already have an account? <Link to="/login" className="text-decoration-none">Login here</Link></p>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+
+      <ToastContainer />
     </div>
-    </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;

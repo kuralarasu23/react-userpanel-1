@@ -1,110 +1,65 @@
-import React from 'react'
-import Navbarr from './Navbar'
-import { Navbar } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
 import { Row, Container, Col } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import Footer from './Footer';
-import { TbTruckDelivery } from "react-icons/tb";
-import { MdOutlineSavings } from "react-icons/md";
-import { PiClockCountdownFill } from "react-icons/pi";
-import { MdPayment } from "react-icons/md";
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+const banner = 'https://raw.githubusercontent.com/kuralarasu23/react-userpanel-1/refs/heads/main/src/images/shortsbanner.jpg'
 
 
+function Shirts() {
+  const giturl = 'https://raw.githubusercontent.com/kuralarasu23/react-userpanel-1/refs/heads/main/src/images/'
+  const [data, setData] = useState([]);
+  const { id } = useParams()
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    GetData();
+  }, []);
+  const Handleclick = (id) => {
+    console.log(id);
+    navigate(`/productsdetails/${id}`)
+  }
 
-function Shorts() {
-    return (
-        <div>
-            <Navbarr />
-            <div class="card bg-dark border-0 text-end">
-                    <img src="./assets/images/banner-05.jpg" class="card-img" alt="background" height='600px' />
-                    <div class="card-img-overlay d-flex flex-column justify-content-start bannertxt ">
-                        <h5 class="ms-5 fs-1 display-3 text-dark">Lifestyle Collection</h5>
-                        <h5 class="ms-5 fs-2 text-danger">Shorts For Men</h5>
-                        <h5 class="ms-5 fs-3">SALE UP TO<span className='fs-5 text-success ms-2'>30% OFF</span></h5>
-                    </div>
-                </div>
-            <Container>
-                <div className='py-4 bg-white mt-5'>
-                    <Row>
-                        <Col xs={3} >
-                            <div className='my-auto border-end text-center'>
-                                <TbTruckDelivery className='fs-1' />
-                                <b>Fast Delivery</b>
-                            </div>
-                        </Col>
-                        <Col xs={3}>
-                            <div className='my-auto border-end  text-center'>
-                                <MdOutlineSavings className='fs-1' />
-                                <b>Money Guarantee</b><br></br>
-                            </div>
-                        </Col>
-                        <Col xs={3}>
-                            <div className='my-auto border-end text-center'>
-                                <PiClockCountdownFill className='fs-1' />
-                                <b>365 Days</b><br></br>
-                            </div>
-                        </Col>
-                        <Col xs={3}>
-                            <div className='my-auto text-center'>
-                                <MdPayment className='fs-1' />
-                                <b>Payment</b><br></br>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                <Row className='mt-5'>
-                    <h1 className='text-center mb-5 display-4 mt-2' >Men's Shorts</h1>
-                    <Col xs={3}><Card className='products' style={{ width: '16rem', border: 'none' }}>
-                        <Card.Img variant="top" src="./assets/images/shorts-2.jpg" style={{ width: '100%', height: '250px' }} className='p-2' />
-                        <Card.Body className='text-center'>
-                            <Card.Title>Chino-Shorts</Card.Title>
-                            <Card.Text>₹499
-                            </Card.Text>
-                            <a>
-                                <Button className='bg-success px-5'>Buy Now</Button>
-                            </a>
-                        </Card.Body>
-                    </Card></Col>
-                    <Col xs={3}><Card className='products' style={{ width: '16rem', border: 'none' }}>
-                        <Card.Img variant="top" src="./assets/images/shorts-3.jpg" style={{ width: '100%', height: '250px' }} className='p-2' />
-                        <Card.Body className='text-center'>
-                            <Card.Title>Cotton Stretch Shorts</Card.Title>
-                            <Card.Text>₹499
-                            </Card.Text>
-                            <a>
-                                <Button className='bg-success px-5'>Buy Now</Button>
-                            </a>
-                        </Card.Body>
-                    </Card></Col>
-                    <Col xs={3}><Card className='products' style={{ width: '16rem', border: 'none' }}>
-                        <Card.Img variant="top" src="./assets/images/shorts-4.jpg" style={{ width: '100%', height: '250px' }} className='p-2' />
-                        <Card.Body className='text-center'>
-                            <Card.Title>Gym-Shorts</Card.Title>
-                            <Card.Text>₹499
-                            </Card.Text>
-                            <a>
-                                <Button className='bg-success px-5'>Buy Now</Button>
-                            </a>
-                        </Card.Body>
-                    </Card></Col>
-                    <Col xs={3}><Card className='products' style={{ width: '16rem', border: 'none' }}>
-                        <Card.Img variant="top" src="./assets/images/shorts-5.jpg" style={{ width: '100%', height: '250px' }} className='p-2' />
-                        <Card.Body className='text-center'>
-                            <Card.Title>Denim-shorts</Card.Title>
-                            <Card.Text>₹499
-                            </Card.Text>
-                            <a>
-                                <Button className='bg-success px-5'>Buy Now</Button>
-                            </a>
-                        </Card.Body>
-                    </Card></Col>
-                </Row>
-            </Container>
-            <Footer />
+  const GetData = () => {
+    axios.get("https://673c4f2196b8dcd5f3f961c0.mockapi.io/Products/Products")
+      .then(response => setData(response.data))
+      .catch(error => {
+        console.error("Error fetching data:", error);
+
+      });
+  };
+
+  const filterdata = data.filter(items => items.listingType == "shorts")
+  console.log(filterdata);
+
+  return (
+    <div>
+      <Container>
+      <div class="card bg-dark border-0">
+        <img src={banner} class="card-img" alt="background" height='600px' />
+        <div class="card-img-overlay d-flex flex-column justify-content-center text-white">
+          <h5 class="ms-5 fs-4 display-3">Lifestyle Collection</h5>
+          <h5 class="ms-5 fs-1 fw-bold text-danger">Shorts For Men</h5>
         </div>
-    )
+      </div>
+        <Row className='py-5'>
+          {filterdata.map((a) => (
+            <Col md={3} onClick={() => Handleclick(a.id)}>
+              <Card style={{ width: '100%', height: 'auto', marginTop: '30px' }} className='img'>
+                <Card.Img variant="top" src={giturl + a.image} style={{ height: '254px' }} />
+                <Card.Body>
+                  <Card.Title className="fs-6">{a.name}</Card.Title>
+                  <Card.Text>{a.price}</Card.Text>
+                  <Button variant="primary">Buy Now</Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
+  )
 }
 
-export default Shorts
+export default Shirts

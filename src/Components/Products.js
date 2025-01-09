@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import shirt from '../images/shirtbg-1.png'
 import pant from '../images/pantsc-1.png'
@@ -16,11 +16,19 @@ import ads3 from "../images/ad-3.jpg";
 import axios from 'axios';
 function Products() {
     const giturl = 'https://raw.githubusercontent.com/kuralarasu23/react-userpanel-1/refs/heads/main/src/images/'
+    const apidata = "https://673c4f2196b8dcd5f3f961c0.mockapi.io/Products/Products"
+
     const [image, setImage] = useState([]);
+    const navigate =useNavigate('');
 
     useEffect(() => {
         GetData();
     }, []);
+    const Handleclick = (id) => {
+        console.log(id);
+        navigate(`/productsdetails/${id}`)
+    }
+
 
     const GetData = () => {
         axios
@@ -59,7 +67,7 @@ function Products() {
                     <Col md={2} className='p-3'>
                     </Col>
                     <Col md={2} className='p-3 category'>
-                        <Link to={'/apidata/1'} className='text-decoration-none' >
+                        <Link to={'/shirts'} className='text-decoration-none' >
                             <a href='' className='text-decoration-none text-dark d-block bg-white p-3'>
                                 <img src={shirt} style={{ width: '100%', height: '170px' }} className='cateory' />
                                 <h4 className='mt-3'>Shirts</h4>
@@ -67,7 +75,7 @@ function Products() {
                         </Link>
                     </Col>
                     <Col md={2} className='p-3 category'>
-                        <Link to={'/apidata/2'} className='text-decoration-none'>
+                        <Link to={'/pants'} className='text-decoration-none'>
                             <a href='' className='text-decoration-none text-dark  d-block bg-white p-3'>
                                 <img src={pant} style={{ width: '100%', height: '170px' }} className='cateory' />
                                 <h4 className='mt-3'>Pants</h4>
@@ -75,7 +83,7 @@ function Products() {
                         </Link>
                     </Col>
                     <Col md={2} className='p-3 category'>
-                        <Link to={'/apidata/3'} className='text-decoration-none'>
+                        <Link to={"/tshirt"} className='text-decoration-none'>
                             <a href='' className='text-decoration-none text-dark d-block bg-white p-3'>
                                 <img src={tshirt} style={{ width: '100%', height: '170px' }} className='cateory' />
                                 <h4 className='mt-3'>T-Shirts</h4>
@@ -83,7 +91,7 @@ function Products() {
                         </Link>
                     </Col>
                     <Col md={2} className='p-3 category'>
-                        <Link to={'/apidata/4'} className='text-decoration-none'>
+                        <Link to={'/shorts'} className='text-decoration-none'>
                             <a href='' className='text-decoration-none text-dark  d-block bg-white p-3'>
                                 <img src={shorts} style={{ width: '100%', height: '170px' }} className='categry' />
                                 <h4 className='mt-3'>Shorts</h4>
@@ -99,8 +107,8 @@ function Products() {
                     <hr></hr>
                     <h1 className='text-center mb-5 display-4 mt-2' >Men's Fashions</h1>
                     {image.map((items) => (
-                        <Col md={3}>
-                            <Card className='products' style={{ width: '100%', border: 'none' }}>
+                        <Col md={3} onClick={() => Handleclick(items.id)}>
+                            <Card className='products mb-5' style={{ width: '100%', border: 'none' }}>
                                 <Card.Img variant="top" src={giturl + items.image} style={{ width: '100%', height: '250px' }} className='p-2' />
                                 <Card.Body className='text-center'>
                                     <Card.Title>{items.name}</Card.Title>
